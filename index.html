@@ -1,0 +1,22 @@
+<script>
+async function getRecommendations() {
+    const mood = document.getElementById("mood").value;
+
+    const response = await fetch("http://127.0.0.1:5000/recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mood: mood })
+    });
+
+    const data = await response.json();
+
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    data.forEach(song => {
+        resultsDiv.innerHTML += `
+            <p><strong>${song.track_name}</strong> - ${song.artist_name} (${song.genre})</p>
+        `;
+    });
+}
+</script>
